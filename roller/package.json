@@ -1,5 +1,5 @@
 {
-  "name": "slack-dnd-5e-nodejs",
+  "name": "slack-dnd-5e-roller",
   "version": "0.0.1",
   "description": "Serverless module dependencies",
   "author": "Donovan Mikrot",
@@ -7,7 +7,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git://github.com/dmikrot/slack-dnd-5e/tree/master/nodejs"
+    "url": "git://github.com/dmikrot/slack-dnd-5e/tree/master/roller"
   },
   "keywords": [],
   "devDependencies": {

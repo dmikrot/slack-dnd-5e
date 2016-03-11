@@ -1,3 +1,5 @@
 {
-  "region": "us-east-1"
+  "region": "us-east-1",
+  "resourcesStackName": "slack-dnd-5e-dev-r",
+  "iamRoleArnLambda": "arn:aws:iam::368211105793:role/slack-dnd-5e-dev-r-IamRoleLambda-GDVVL306LBOR"
 }

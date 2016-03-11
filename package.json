@@ -1,0 +1,15 @@
+{
+  "name": "slack-dnd-5e",
+  "version": "0.0.1",
+  "description": "slack-dnd-5e",
+  "author": "Donovan Mikrot",
+  "license": "MIT",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dmikrot/slack-dnd-5e"
+  },
+  "dependencies": {
+    "serverless": "~0.4.2"
+  }
+}

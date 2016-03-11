@@ -1,0 +1,10 @@
+{
+  "name": "slack-dnd-5e",
+  "version": "0.0.1",
+  "profile": "serverless-v0.4.2",
+  "location": "https://github.com/dmikrot/slack-dnd-5e",
+  "author": "Donovan Mikrot",
+  "description": "slack-dnd-5e",
+  "custom": {},
+  "plugins": []
+}

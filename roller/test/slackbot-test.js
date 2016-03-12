@@ -17,15 +17,14 @@ describe('slackbot', function () {
     receivedArgs = [];
   });
 
-  it('responds to ping', function () {
-    slackBot.ping(null, callback);
+  it('responds to root command', function () {
+    slackBot.root({
+      args: {
+        rolls: ['2d4+1']
+      },
+      userName: 'testUser'
+    }, callback);
     expect(received).to.be.true();
-    expect(receivedArgs).to.deep.eq([null, slackBot.inChannelResponse('Hello World')]);
-  });
-
-  it('responds to echo', function () {
-    slackBot.echo({ args: { words: ['one', 'two', 'three'] } }, callback);
-    expect(received).to.be.true();
-    expect(receivedArgs).to.deep.eq([null, slackBot.ephemeralResponse('one two three')]);
+    expect(receivedArgs).to.deep.eq([null, slackBot.inChannelResponse('testUser rolls 2d4+1 and gets 5')]);
   });
 });

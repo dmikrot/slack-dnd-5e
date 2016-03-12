@@ -10,18 +10,20 @@
 // Require Serverless ENV vars
 var ServerlessHelpers = require('serverless-helpers-js').loadEnv();
 
-// Require Logic
+// Require Slackbot router
 var SlackBot = require('lambda-slack-router');
 
 // Slack subcommands
 var slackBot = new SlackBot({ token: process.env.SLACK_VERIFICATION_TOKEN });
 
-slackBot.addCommand('ping', 'Ping the lambda', function (options, callback) {
-  callback(null, this.inChannelResponse('Hello World'));
-});
+// Require dice roller
+var Roller = require('./roller.js');
+var roller = new Roller();
 
-slackBot.addCommand('echo words...', 'Echo the given arguments', function (options, callback) {
-  callback(null, this.ephemeralResponse(options.args.words.join(' ')));
+slackBot.setRootCommand('rolls...', 'Roll dice and get the result', function (options, callback) {
+  var results = roller.roll(options.args.rolls);
+  var response = options.userName + ' rolls ' + results[0].roll + ' and gets ' + results[0].result;
+  callback(null, this.inChannelResponse(response));
 });
 
 // Router configuration

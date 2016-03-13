@@ -15,6 +15,22 @@ Roller.prototype.roll = function (roll) {
   return { roll: modifiedRoll, total: this.calculate(modifiedRoll) };
 };
 
+Roller.prototype.rollAdvantage = function (modifier) {
+  return this.rollTwice(modifier, Math.max);
+};
+
+Roller.prototype.rollDisadvantage = function (modifier) {
+  return this.rollTwice(modifier, Math.min);
+};
+
+Roller.prototype.rollTwice = function (mod, reducer) {
+  var modifier = mod.charAt(0) === '-' || mod.charAt(0) === '+' ? mod : '+' + mod;
+  var roll = '1d20' + this.sanitize(modifier);
+  var firstTotal = this.calculate(roll);
+  var secondTotal = this.calculate(roll);
+  return { roll: roll, total: reducer(firstTotal, secondTotal) };
+};
+
 Roller.prototype.sanitize = function (roll) {
   return roll.replace(/[^d\d\+\*\/%)(-]/g, '');
 };

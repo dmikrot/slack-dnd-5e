@@ -69,8 +69,7 @@ describe('root command', function () {
   });
 
   it('responds with error message for invalid rolls', function () {
-    var error = 'You asked me to roll "2d8", "+", "1".\nI couldn\'t figure out how to roll "+".';
-
+    var errors = [{ text: 'I couldn\'t figure out how to roll "+".' }];
     slackBot.root({
       args: {
         rolls: ['2d8', '+', '1']
@@ -81,6 +80,65 @@ describe('root command', function () {
     expect(received).to.be.true();
     expect(receivedArgs[0]).to.eq(null);
     expect(receivedArgs[1].response_type).to.eq('ephemeral');
-    expect(receivedArgs[1].text).to.eq(error);
+    expect(receivedArgs[1].text).to.eq('You asked me to roll "2d8", "+", "1":');
+    expect(receivedArgs[1].attachments).to.deep.eq(errors);
+  });
+});
+
+describe('adv command', function () {
+  var received;
+  var receivedArgs;
+  var callback = function (error, success) {
+    received = true;
+    receivedArgs = [error, success];
+  };
+
+  beforeEach(function () {
+    received = false;
+    receivedArgs = [];
+  });
+
+  it('responds with result', function () {
+    var textRegex = /testUser rolls 1d20\+2 with advantage and gets [12]?[0-9]/;
+    slackBot.adv({
+      args: {
+        modifier: '+2'
+      },
+      userName: 'testUser'
+    }, callback);
+
+    expect(received).to.be.true();
+    expect(receivedArgs[0]).to.eq(null);
+    expect(receivedArgs[1].response_type).to.eq('in_channel');
+    expect(receivedArgs[1].text).to.match(textRegex);
+  });
+});
+
+describe('dis command', function () {
+  var received;
+  var receivedArgs;
+  var callback = function (error, success) {
+    received = true;
+    receivedArgs = [error, success];
+  };
+
+  beforeEach(function () {
+    received = false;
+    receivedArgs = [];
+  });
+
+  it('responds with result', function () {
+    var textRegex = /testUser rolls 1d20\+2 with disadvantage and gets [12]?[0-9]/;
+    slackBot.dis({
+      args: {
+        modifier: '+2'
+      },
+      userName: 'testUser'
+    }, callback);
+
+    expect(received).to.be.true();
+    expect(receivedArgs[0]).to.eq(null);
+    expect(receivedArgs[1].response_type).to.eq('in_channel');
+    expect(receivedArgs[1].text).to.match(textRegex);
   });
 });

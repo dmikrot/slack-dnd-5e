@@ -85,4 +85,22 @@ describe('roller', function () {
       roller.roll('empty');
     }).to.throw(/Can't calculate empty roll/);
   });
+
+  it('can roll with advantage', function () {
+    var result = roller.rollAdvantage('+7');
+
+    assertResult(result, '1d20+7', 8, 27);
+  });
+
+  it('can roll with disadvantage', function () {
+    var result = roller.rollDisadvantage('+7');
+
+    assertResult(result, '1d20+7', 8, 27);
+  });
+
+  it('assumes unsigned modifier is addition', function () {
+    var result = roller.rollAdvantage('7');
+
+    assertResult(result, '1d20+7', 8, 27);
+  });
 });

@@ -32,6 +32,8 @@ describe('root command', function () {
   });
 
   it('responds with multiple results', function () {
+    var lines;
+    var i;
     slackBot.root({
       args: {
         rolls: ['2d4+1', '2d4+1']
@@ -42,9 +44,9 @@ describe('root command', function () {
     expect(received).to.be.true();
     expect(receivedArgs[0]).to.eq(null);
     expect(receivedArgs[1].response_type).to.eq('in_channel');
-    var lines = receivedArgs[1].text.split('\n');
+    lines = receivedArgs[1].text.split('\n');
     expect(lines.length).to.eq(2);
-    for (var i = 0; i < lines.length; ++i) {
+    for (i = 0; i < lines.length; ++i) {
       expect(lines[i]).to.match(/testUser rolls 2d4\+1 and gets [2-9]/);
     }
   });

@@ -21,9 +21,11 @@ var Roller = require('./roller.js');
 var roller = new Roller();
 
 slackBot.setRootCommand('rolls...', 'Roll dice and get the result', function (options, callback) {
+  var results;
+  var response;
   if (options.args.rolls.length) {
-    var results = roller.rollAll(options.args.rolls);
-    var response = results.map(function (result) {
+    results = roller.rollAll(options.args.rolls);
+    response = results.map(function (result) {
       return options.userName + ' rolls ' + result.roll + ' and gets ' + result.result;
     });
     callback(null, this.inChannelResponse(response.join('\n')));

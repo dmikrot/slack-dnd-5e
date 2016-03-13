@@ -21,9 +21,15 @@ var Roller = require('./roller.js');
 var roller = new Roller();
 
 slackBot.setRootCommand('rolls...', 'Roll dice and get the result', function (options, callback) {
-  var results = roller.roll(options.args.rolls);
-  var response = options.userName + ' rolls ' + results[0].roll + ' and gets ' + results[0].result;
-  callback(null, this.inChannelResponse(response));
+  if (options.args.rolls.length) {
+    var results = roller.rollAll(options.args.rolls);
+    var response = results.map(function (result) {
+      return options.userName + ' rolls ' + result.roll + ' and gets ' + result.result;
+    });
+    callback(null, this.inChannelResponse(response.join('\n')));
+  } else {
+    slackBot.help(options, callback);
+  }
 });
 
 // Router configuration

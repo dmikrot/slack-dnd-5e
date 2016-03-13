@@ -6,10 +6,10 @@ This project uses the `lambda-slack-router` node module found here: <https://git
 
 ## Configuration
 
-Install the necessary node modules by running `npm install` in both the root directory and `nodejs` directory:
+Install the necessary node modules by running `npm install` in both the root directory and `roller` directory:
 
     $ npm install
-    $ cd nodejs
+    $ cd roller
     $ npm install
 
 ## Deployment
@@ -24,14 +24,26 @@ Then, deploy the resources:
 
 Next, deploy the function and endpoint:
 
-    $ cd nodejs
+    $ cd roller
     $ sls dash deploy -s <stage>
 
 Take the postback url, enter it into the slack integration configuration, and save.
+
+Deploy a new version of the function to the same stage:
+
+    $ cd roller
+    $ sls function deploy -s <stage>
 
 ## Testing
 
 `cd` into the correct directory and run `npm test`:
 
-    $ cd nodejs
+    $ cd roller
     $ npm test
+
+## Linting
+
+`cd` into the correct directory and run `npm run lint`:
+
+    $ cd roller
+    $ npm run lint

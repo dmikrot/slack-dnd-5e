@@ -12,17 +12,23 @@ Roller.prototype.rollAll = function (rolls) {
 
 Roller.prototype.roll = function (roll) {
   var modifiedRoll = this.sanitize(roll);
-  return { roll: modifiedRoll, result: this.calculate(roll) };
+  return { roll: modifiedRoll, total: this.calculate(modifiedRoll) };
 };
 
 Roller.prototype.sanitize = function (roll) {
-  return roll.replace(/[^d\d\+\*%)(-]/g, '');
+  return roll.replace(/[^d\d\+\*\/%)(-]/g, '');
 };
 
 Roller.prototype.calculate = function (roll) {
-  return eval(roll.replace(/(\d?)d(\d+)/g, function (a, many, die) { // eslint-disable-line no-eval
+  var rolled;
+  if (!roll.length) {
+    throw new Error('Can\'t calculate empty roll');
+  }
+  rolled = roll.replace(/(\d*)d(\d+)/g, function (a, many, die) {
     return this.rollDice(many || 1, die);
-  }.bind(this)));
+  }.bind(this));
+
+  return Math.floor(eval(rolled)); // eslint-disable-line no-eval
 };
 
 Roller.prototype.rollDice = function (many, die) {
@@ -32,6 +38,21 @@ Roller.prototype.rollDice = function (many, die) {
     value += Math.floor(Math.random() * die) + 1;
   }
   return value;
+};
+
+Roller.prototype.findInvalidRolls = function (rolls) {
+  var i;
+  var roll;
+  var invalidRolls = [];
+  for (i = 0; i < rolls.length; ++i) {
+    try {
+      roll = this.sanitize(rolls[i]);
+      this.calculate(roll);
+    } catch (e) {
+      invalidRolls.push(roll);
+    }
+  }
+  return invalidRolls;
 };
 
 module.exports = Roller;

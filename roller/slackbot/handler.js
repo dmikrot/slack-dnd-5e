@@ -20,15 +20,25 @@ var slackBot = new SlackBot({ token: process.env.SLACK_VERIFICATION_TOKEN });
 var Roller = require('./roller.js');
 var roller = new Roller();
 
-slackBot.setRootCommand('rolls...', 'Roll dice and get the result', function (options, callback) {
+slackBot.setRootCommand('rolls...', '1d20+7 (2d6+3)/2', function (options, callback) {
   var results;
   var response;
+  var invalidRolls;
   if (options.args.rolls.length) {
-    results = roller.rollAll(options.args.rolls);
-    response = results.map(function (result) {
-      return options.userName + ' rolls ' + result.roll + ' and gets ' + result.result;
-    });
-    callback(null, this.inChannelResponse(response.join('\n')));
+    try {
+      results = roller.rollAll(options.args.rolls);
+      response = results.map(function (result) {
+        return options.userName + ' rolls ' + result.roll + ' and gets ' + result.total;
+      });
+      callback(null, this.inChannelResponse(response.join('\n')));
+    } catch (e) {
+      invalidRolls = roller.findInvalidRolls(options.args.rolls);
+      response = invalidRolls.map(function (invalid) {
+        return 'I couldn\'t figure out how to roll "' + invalid + '".';
+      });
+      response.unshift('You asked me to roll "' + options.args.rolls.join('", "') + '".');
+      callback(null, this.ephemeralResponse(response.join('\n')));
+    }
   } else {
     slackBot.help(options, callback);
   }

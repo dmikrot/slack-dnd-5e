@@ -2,7 +2,7 @@
 
 ## Development
 
-This project uses the `lambda-slack-router` node module found here: <https://github.com/localytics/lambda-slack-router>. For documentation on how to add subcommands to the router, see the README.
+This project uses a `lambda-slack-router` node module fork found here: <https://github.com/dmikrot/lambda-slack-router>. For documentation on how to add subcommands to the router, see the README.
 
 ## Configuration
 
@@ -20,20 +20,20 @@ First, set the slack token env variable:
 
     $ export SLACK_VERIFICATION_TOKEN=<token>
 
-Then, deploy the resources:
+Then, deploy the function and endpoint from scratch:
 
     $ serverless deploy
 
 Take the endpoints url, enter it into the slack integration configuration, and save.
 
-## Testing
+To quickly deploy updated function code only during development, run:
 
-Run `npm run test`:
+    $ serverless deploy function --function slackbot
 
-    $ npm run test
+## Run Test Suite
 
-## Linting
+    $ npm test
 
-Run `npm run lint`:
+## Run Linter
 
     $ npm run lint

@@ -1,26 +1,28 @@
-var slackBot = require('../handler').slackBot;
-var chai = require('chai');
-var expect = chai.expect;
+/* global describe beforeEach it */
+const chai = require('chai');
+const { slackBot } = require('../handler');
+
+const { expect } = chai;
 
 chai.use(require('dirty-chai'));
 
-describe('root command', function () {
-  var received;
-  var receivedArgs;
-  var callback = function (error, success) {
+describe('root command', () => {
+  let received;
+  let receivedArgs;
+  const callback = (error, success) => {
     received = true;
     receivedArgs = [error, success];
   };
 
-  beforeEach(function () {
+  beforeEach(() => {
     received = false;
     receivedArgs = [];
   });
 
-  it('responds with result', function () {
+  it('responds with result', () => {
     slackBot.root({
       args: {
-        rolls: ['2d4+1']
+        rolls: ['2d4+1'],
       },
       body: {
         user_name: 'testUser',
@@ -33,12 +35,11 @@ describe('root command', function () {
     expect(receivedArgs[1].text).to.match(/testUser rolls 2d4\+1 and gets [3-9]/);
   });
 
-  it('responds with multiple results', function () {
-    var lines;
-    var i;
+  it('responds with multiple results', () => {
+    let i;
     slackBot.root({
       args: {
-        rolls: ['2d4+1', '2d4+1']
+        rolls: ['2d4+1', '2d4+1'],
       },
       body: {
         user_name: 'testUser',
@@ -48,22 +49,22 @@ describe('root command', function () {
     expect(received).to.be.true();
     expect(receivedArgs[0]).to.eq(null);
     expect(receivedArgs[1].response_type).to.eq('in_channel');
-    lines = receivedArgs[1].text.split('\n');
+    const lines = receivedArgs[1].text.split('\n');
     expect(lines.length).to.eq(2);
-    for (i = 0; i < lines.length; ++i) {
+    for (i = 0; i < lines.length; i += 1) {
       expect(lines[i]).to.match(/testUser rolls 2d4\+1 and gets [3-9]/);
     }
   });
 
-  it('responds with help for no rolls', function () {
-    var helpArgs;
-    slackBot.help({}, function (error, result) {
+  it('responds with help for no rolls', () => {
+    let helpArgs;
+    slackBot.help({}, (error, result) => {
       helpArgs = [error, result];
     });
 
     slackBot.root({
       args: {
-        rolls: []
+        rolls: [],
       },
       body: {
         user_name: 'testUser',
@@ -74,11 +75,11 @@ describe('root command', function () {
     expect(receivedArgs).to.deep.eq(helpArgs);
   });
 
-  it('responds with error message for invalid rolls', function () {
-    var errors = [{ text: 'I couldn\'t figure out how to roll "+".' }];
+  it('responds with error message for invalid rolls', () => {
+    const errors = [{ text: 'I couldn\'t figure out how to roll "+".' }];
     slackBot.root({
       args: {
-        rolls: ['2d8', '+', '1']
+        rolls: ['2d8', '+', '1'],
       },
       body: {
         user_name: 'testUser',
@@ -93,24 +94,24 @@ describe('root command', function () {
   });
 });
 
-describe('adv command', function () {
-  var received;
-  var receivedArgs;
-  var callback = function (error, success) {
+describe('adv command', () => {
+  let received;
+  let receivedArgs;
+  const callback = (error, success) => {
     received = true;
     receivedArgs = [error, success];
   };
 
-  beforeEach(function () {
+  beforeEach(() => {
     received = false;
     receivedArgs = [];
   });
 
-  it('responds with result', function () {
-    var textRegex = /testUser rolls 1d20\+2 with advantage and gets [12]?[0-9]/;
+  it('responds with result', () => {
+    const textRegex = /testUser rolls 1d20\+2 with advantage and gets [12]?[0-9]/;
     slackBot.adv({
       args: {
-        modifier: '+2'
+        modifier: '+2',
       },
       body: {
         user_name: 'testUser',
@@ -124,24 +125,24 @@ describe('adv command', function () {
   });
 });
 
-describe('dis command', function () {
-  var received;
-  var receivedArgs;
-  var callback = function (error, success) {
+describe('dis command', () => {
+  let received;
+  let receivedArgs;
+  const callback = (error, success) => {
     received = true;
     receivedArgs = [error, success];
   };
 
-  beforeEach(function () {
+  beforeEach(() => {
     received = false;
     receivedArgs = [];
   });
 
-  it('responds with result', function () {
-    var textRegex = /testUser rolls 1d20\+2 with disadvantage and gets [12]?[0-9]/;
+  it('responds with result', () => {
+    const textRegex = /testUser rolls 1d20\+2 with disadvantage and gets [12]?[0-9]/;
     slackBot.dis({
       args: {
-        modifier: '+2'
+        modifier: '+2',
       },
       body: {
         user_name: 'testUser',

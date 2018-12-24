@@ -1,4 +1,4 @@
-var Roller = require('../slackbot/roller');
+var Roller = require('../roller');
 var roller = new Roller();
 var chai = require('chai');
 var expect = chai.expect;

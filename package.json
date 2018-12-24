@@ -1,15 +1,22 @@
 {
   "name": "slack-dnd-5e",
-  "version": "0.0.1",
-  "description": "slack-dnd-5e",
+  "version": "0.0.2",
+  "description": "Slack command for rolling dice for D&D 5e",
+  "scripts": {
+    "test": "mocha",
+    "lint": "eslint ."
+  },
   "author": "Donovan Mikrot",
   "license": "MIT",
-  "private": false,
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/dmikrot/slack-dnd-5e"
-  },
   "dependencies": {
-    "serverless": "~0.4.2"
+    "lambda-slack-router": "dmikrot/lambda-slack-router#root-command"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "dirty-chai": "^2.0.1",
+    "eslint": "^5.11.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "mocha": "^5.2.0"
   }
 }

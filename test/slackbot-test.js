@@ -1,4 +1,4 @@
-var slackBot = require('../slackbot/handler').slackBot;
+var slackBot = require('../handler').slackBot;
 var chai = require('chai');
 var expect = chai.expect;
 
@@ -22,7 +22,9 @@ describe('root command', function () {
       args: {
         rolls: ['2d4+1']
       },
-      userName: 'testUser'
+      body: {
+        user_name: 'testUser',
+      },
     }, callback);
 
     expect(received).to.be.true();
@@ -38,7 +40,9 @@ describe('root command', function () {
       args: {
         rolls: ['2d4+1', '2d4+1']
       },
-      userName: 'testUser'
+      body: {
+        user_name: 'testUser',
+      },
     }, callback);
 
     expect(received).to.be.true();
@@ -61,7 +65,9 @@ describe('root command', function () {
       args: {
         rolls: []
       },
-      userName: 'testUser'
+      body: {
+        user_name: 'testUser',
+      },
     }, callback);
 
     expect(received).to.be.true();
@@ -74,7 +80,9 @@ describe('root command', function () {
       args: {
         rolls: ['2d8', '+', '1']
       },
-      userName: 'testUser'
+      body: {
+        user_name: 'testUser',
+      },
     }, callback);
 
     expect(received).to.be.true();
@@ -104,7 +112,9 @@ describe('adv command', function () {
       args: {
         modifier: '+2'
       },
-      userName: 'testUser'
+      body: {
+        user_name: 'testUser',
+      },
     }, callback);
 
     expect(received).to.be.true();
@@ -133,7 +143,9 @@ describe('dis command', function () {
       args: {
         modifier: '+2'
       },
-      userName: 'testUser'
+      body: {
+        user_name: 'testUser',
+      },
     }, callback);
 
     expect(received).to.be.true();

@@ -1,6 +1,6 @@
-npm-debug.log
+# package directories
 node_modules
-.DS_Store
-admin.env
-.env
-_tmp
+jspm_packages
+
+# Serverless directories
+.serverless

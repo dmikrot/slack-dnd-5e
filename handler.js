@@ -7,9 +7,6 @@
  * - 'serverless-helpers-js' module is required for Serverless ENV var support
  */
 
-// Require Serverless ENV vars
-var ServerlessHelpers = require('serverless-helpers-js').loadEnv();
-
 // Require Slackbot router
 var SlackBot = require('lambda-slack-router');
 
@@ -31,7 +28,7 @@ var handleErrors = function (rolls, callback) {
   }));
 };
 
-slackBot.setRootCommand('rolls...', '1d20+7 (2d6+3)/2', function (options, callback) {
+slackBot.setRootCommand(['rolls...'], '1d20+7 (2d6+3)/2', function (options, callback) {
   var results;
   var response;
 
@@ -39,7 +36,7 @@ slackBot.setRootCommand('rolls...', '1d20+7 (2d6+3)/2', function (options, callb
     try {
       results = roller.rollAll(options.args.rolls);
       response = results.map(function (result) {
-        return options.userName + ' rolls ' + result.roll + ' and gets ' + result.total;
+        return options.body.user_name + ' rolls ' + result.roll + ' and gets ' + result.total;
       });
       callback(null, this.inChannelResponse(response.join('\n')));
     } catch (e) {
@@ -50,22 +47,22 @@ slackBot.setRootCommand('rolls...', '1d20+7 (2d6+3)/2', function (options, callb
   }
 });
 
-slackBot.addCommand('adv modifier', 'Roll 1d20 with advantage', function (options, callback) {
+slackBot.addCommand('adv', ['modifier'], 'Roll 1d20 with advantage', function (options, callback) {
   var result;
   try {
     result = roller.rollAdvantage(options.args.modifier);
-    callback(null, this.inChannelResponse(options.userName + ' rolls ' + result.roll
+    callback(null, this.inChannelResponse(options.body.user_name + ' rolls ' + result.roll
       + ' with advantage and gets ' + result.total));
   } catch (e) {
     handleErrors(['1d20' + options.args.modifier], callback);
   }
 });
 
-slackBot.addCommand('dis modifier', 'Roll 1d20 with disadvantage', function (options, callback) {
+slackBot.addCommand('dis', ['modifier'], 'Roll 1d20 with disadvantage', function (options, callback) {
   var result;
   try {
     result = roller.rollDisadvantage(options.args.modifier);
-    callback(null, this.inChannelResponse(options.userName + ' rolls ' + result.roll
+    callback(null, this.inChannelResponse(options.body.user_name + ' rolls ' + result.roll
       + ' with disadvantage and gets ' + result.total));
   } catch (e) {
     handleErrors(['1d20' + options.args.modifier], callback);
@@ -73,5 +70,5 @@ slackBot.addCommand('dis modifier', 'Roll 1d20 with disadvantage', function (opt
 });
 
 // Router configuration
-module.exports.handler = slackBot.buildRouter();
+module.exports.router = slackBot.buildRouter();
 module.exports.slackBot = slackBot;

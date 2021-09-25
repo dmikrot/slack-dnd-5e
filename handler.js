@@ -11,7 +11,7 @@ const SlackBot = require('lambda-slack-router');
 const slackBot = new SlackBot({ token: process.env.SLACK_VERIFICATION_TOKEN });
 
 // Require dice roller
-const Roller = require('./roller.js');
+const Roller = require('./roller');
 
 const roller = new Roller();
 
@@ -19,7 +19,7 @@ const handleErrors = (rolls, callback) => {
   callback(null, slackBot.ephemeralResponse({
     text: `You asked me to roll "${rolls.join('", "')}":`,
     attachments: [{
-      text: roller.findInvalidRolls(rolls).map(invalid => `I couldn't figure out how to roll "${invalid}".`).join('\n'),
+      text: roller.findInvalidRolls(rolls).map((invalid) => `I couldn't figure out how to roll "${invalid}".`).join('\n'),
     }],
   }));
 };
@@ -31,7 +31,7 @@ slackBot.setRootCommand(['rolls...'], '1d20+7 (2d6+3)/2', function rollAllComman
   if (options.args.rolls.length) {
     try {
       results = roller.rollAll(options.args.rolls);
-      response = results.map(result => `${options.body.user_name} rolls ${result.roll} and gets ${result.total}`);
+      response = results.map((result) => `${options.body.user_name} rolls ${result.roll} and gets ${result.total}`);
       callback(null, this.inChannelResponse(response.join('\n')));
     } catch (e) {
       handleErrors(options.args.rolls, callback);

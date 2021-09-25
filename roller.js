@@ -49,7 +49,7 @@ class Roller {
 
   findInvalidRolls(rolls) {
     return rolls
-      .map(roll => this.sanitize(roll))
+      .map((roll) => this.sanitize(roll))
       .filter((roll) => {
         try {
           this.calculate(roll);

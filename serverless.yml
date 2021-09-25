@@ -20,6 +20,7 @@ service: slack-dnd-5e # NOTE: update this with your service name
 provider:
   name: aws
   runtime: nodejs14.x
+  lambdaHashingVersion: 20201221
 
 # you can overwrite defaults here
 #  stage: dev
@@ -47,8 +48,8 @@ provider:
 
 # you can add packaging information here
 package:
-  exclude:
-  - test/**
+  patterns:
+  - '!test/**'
 
 functions:
   slackbot:

@@ -13,7 +13,7 @@
   "author": "Donovan Mikrot",
   "license": "MIT",
   "dependencies": {
-    "lambda-slack-router": "github:dmikrot/lambda-slack-router#root-command"
+    "lambda-slack-router": "gitlab:DonovanMN/lambda-slack-router#root-command"
   },
   "devDependencies": {
     "chai": "^4.3.4",

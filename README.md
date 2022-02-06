@@ -2,7 +2,7 @@
 
 ## Development
 
-This project uses a `lambda-slack-router` node module fork found here: <https://github.com/dmikrot/lambda-slack-router>. For documentation on how to add subcommands to the router, see the README.
+This project uses a `lambda-slack-router` node module fork found here: <https://gitlab.com/DonovanMN/lambda-slack-router>. For documentation on how to add subcommands to the router, see the README.
 
 ## Configuration
 

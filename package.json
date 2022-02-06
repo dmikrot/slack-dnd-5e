@@ -4,7 +4,7 @@
   "description": "Slack command for rolling dice for D&D 5e",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dmikrot/slack-dnd-5e"
+    "url": "https://gitlab.com/DonovanMN/slack-dnd-5e"
   },
   "scripts": {
     "test": "mocha",

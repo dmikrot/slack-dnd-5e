@@ -19,7 +19,7 @@ service: slack-dnd-5e # NOTE: update this with your service name
 
 provider:
   name: aws
-  runtime: nodejs16.x
+  runtime: nodejs18.x
 
 # you can overwrite defaults here
 #  stage: dev
